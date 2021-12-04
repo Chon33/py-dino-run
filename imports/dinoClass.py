@@ -14,15 +14,6 @@ class Dino:
     """
 
     def __init__(self, skinIndex: int, mult: int, name: str, screen: pygame.Surface):      
-        """
-        try:
-            self.skin = self.skin_list[self.skinIndex]
-        except IndexError:
-            self.skin = self.skin_list[0]
-
-        self.spritesheet = Spritesheet(self.skin)
-        """
-
         self.shadow = pygame.image.load("assets/misc/shadow.png")
         self.shadow = pygame.transform.scale(self.shadow, (55, 55))
         self.mult = mult
@@ -39,6 +30,8 @@ class Dino:
         self.going_up = True
         self.jump_speed = 3
         self.max_jump = 65
+
+        self.btn1 = False
 
     def changeSkin(self, skinIndex):
         self.skinIndex = skinIndex
@@ -92,24 +85,52 @@ class Dino:
             dino_sneak]
 
     def start(self, pressed_keys: Sequence[bool]):
-        if not self.started and pressed_keys[pygame.K_RETURN]:
+        if not self.started and pressed_keys[pygame.K_RETURN] and not self.btn1:
+            self.btn1 = True
             if self.ui_text.selectedOption == 0:
                 self.started = True
                 self.ui_text.start()
                 self.k = 1
+            
+            elif self.ui_text.selectedOption == 1 and self.ui_text.closeSettingsMenu:
+                self.ui_text.openSettingsMenu = True
+
+            elif self.ui_text.selectedOption == 1 and not self.ui_text.closeSettingsMenu:
+                if self.ui_text.settingsIndex == 1:
+                    self.ui_text.inSettingsMenu = False
+                    self.ui_text.openSettingsMenu = False
+                    self.ui_text.closeSettingsMenu = True
 
             elif self.ui_text.selectedOption == 2:
                 self.running = False
+            
+        elif not pressed_keys[pygame.K_RETURN]:
+            self.btn1 = False
 
     def update(self, screen, pressed_keys: Sequence[bool]):
         self.start(pressed_keys)
         self.jump(pressed_keys)
         self.sneak(pressed_keys)
 
-        self.ui_text.update(pressed_keys, self)
+        self.ui_text.update(pressed_keys, self) #? self = Dino
 
         self.elapsed += 1
         self.elap2 +=1
+
+        if not self.started and self.ui_text.closeSettingsMenu and self.ui_text.openSettingsMenu:
+            if self.ui_text.mainMenuPadding > -170:
+                self.ui_text.mainMenuPadding -= 7
+
+            elif self.ui_text.mainMenuPadding == -174:
+                self.ui_text.inSettingsMenu = True
+                self.ui_text.closeSettingsMenu = False
+                self.ui_text.openSettingsMenu = False
+
+        elif not self.started and self.ui_text.closeSettingsMenu:
+            if self.ui_text.mainMenuPadding <= 85:
+                self.ui_text.mainMenuPadding += 7
+            
+        
 
         if self.elapsed > 4:
             self.i = (self.i+1) % len(self.dino_anims[self.k])        

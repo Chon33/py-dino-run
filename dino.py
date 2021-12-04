@@ -17,59 +17,21 @@ except:
 pygame.init()
 #&######################################################################################
 
-#&##################### FUNCTIONS ##########################
-help_msg = "python3 dino.py -n Daniel -s doux\n \
-            -n, --name     Nombre tu dinosaurio\n \
-            -s, --skin     Cambia el color de tu dinosaurio\n \
-                             skins: doux, mort, tard, vita\n \
-            -h, --help     Muestra este mensaje\n"
-
-
-def main(argv):
-    global name, skin
-    name, skin = "", ""
-    try:
-        opts, args = getopt.getopt(argv, "hn:s:", ["name", "skin"])
-    except getopt.GetoptError:
-        print(help_msg)
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt in ("-h", "--help"):
-            print(help_msg)
-        elif opt in ("-n", "--name"):
-            name = arg
-        elif opt in ("-s", "--skin"):
-            skin = arg
-
-    if not name or not skin:
-        print(help_msg)
-        sys.exit(2)
-    else:
-        print(f"Nombre: {name}")
-        print(f"Skin:   {skin}")
-
-
-# main(sys.argv[1:])
-#&##########################################################
-
 #&###################### WINDOW ############################
 size = (width, height) = 600, 240
 speed = [0, 0]
 bg = (123, 162, 255)
 screen = pygame.display.set_mode(size)
-#&##########################################################
+pygame.display.set_caption("Py Dino Run")
 
-#&####################### GRASS ############################
 grass_rect = pygame.Rect(0, height - 35, 600, 35)
 grass_color = (107, 255, 116)
 #&##########################################################
 
 #&####################### LOGIC ############################
 clock = pygame.time.Clock
-dino = Dino(3, 3, "daniel", screen)
+dino = Dino(5, 3, "daniel", screen)
 
-pygame.display.set_caption(f"{dino.name}")
 
 running = dino.running
 while running:

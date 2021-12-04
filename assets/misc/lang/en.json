@@ -1,0 +1,12 @@
+{
+    "singleplayer": "Singleplayer",
+    "settings": "Settings",
+    "scoreboard": "Scoreboard",
+    "exit": "Exit",
+    "name": "Name: ",
+    "lang": "Language",
+    "back": "Back",
+    "pause": "Pause",
+    "continue": "Continue",
+    "restart": "Restart"
+}
