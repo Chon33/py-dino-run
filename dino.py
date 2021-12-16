@@ -2,24 +2,20 @@
 
 #&############################### IMPORTS ##############################################
 from imports.dinoClass import Dino
-import getopt
-import sys
+from imports.lang import *
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 try:
     import pygame
 except:
-    print("Necesitas \"pygame\".\n \
-    Usa \"pip install pygame\" para instalarlo.\n\n \
-    Si no tienes pip, puedes instalarlo con \"sudo apt install python3-pip\".\n")
+    print(lang['pygame_error'])
 
 pygame.init()
 #&######################################################################################
 
 #&###################### WINDOW ############################
 size = (width, height) = 600, 240
-speed = [0, 0]
 bg = (123, 162, 255)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Py Dino Run")
@@ -30,7 +26,7 @@ grass_color = (107, 255, 116)
 
 #&####################### LOGIC ############################
 clock = pygame.time.Clock
-dino = Dino(5, 3, "daniel", screen)
+dino = Dino(5, 3, settings["name"], screen)
 
 
 running = dino.running
@@ -39,7 +35,9 @@ while running:
     running = dino.running    
     pressed_keys = pygame.key.get_pressed()
 
-    for event in pygame.event.get():
+    events = pygame.event.get()
+
+    for event in events:
         if event.type == pygame.QUIT:
             dino.running = False
 
@@ -48,7 +46,7 @@ while running:
 
     screen.fill(bg)
     pygame.draw.rect(screen, grass_color, grass_rect)
-    dino.update(screen, pressed_keys)
+    dino.update(screen, pressed_keys, events)
 
     pygame.display.update()
 

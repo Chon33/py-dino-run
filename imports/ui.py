@@ -1,3 +1,5 @@
+from pygame import key
+from imports.lang import *
 from typing import Sequence
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
@@ -5,9 +7,9 @@ import pygame
 
 
 class UItext:
-    """Muestra texto en pantalla:
-        - Nombre
-        - Puntos
+    """Displays text on screen:
+        - Name
+        - Score
         - Start
     """
 
@@ -16,11 +18,12 @@ class UItext:
         self.name = name
         self.screen = screen
         self.w, self.h = self.screen.get_width(), self.screen.get_height()
+        self.selectedLanguage = 1
         self.points = 0
         self.rfont = pygame.font.Font("assets/misc/P22Bangersfield-Regular.ttf", 25)
         self.bfont = pygame.font.Font("assets/misc/P22Bangersfield-Bold.ttf", 25)
         
-        self.mainMenuOptions = ["Singleplayer", "Settings", "Exit"]
+        self.mainMenuOptions = [lang["singleplayer"], lang["settings"], lang["exit"]]
         self.selectedOption = 0
         self.settingsIndex = 0
         self.inMainMenu = True
@@ -35,18 +38,48 @@ class UItext:
         self.btn4 = False
         self.btn5 = False
         self.btn6 = False
+
+        self.btn7 = False
+        self.btn8 = False
     
-    def update(self, pressed_keys: Sequence[bool], dino):
+    def update(self, pressed_keys: Sequence[bool], dino, events):
         if not self.started:
             self.mainMenu(pressed_keys, dino)
-            self.settingsMenu(pressed_keys, dino)
+            self.settingsMenu(pressed_keys, events)
         else:
             self.draw()
 
-    def settingsMenu(self, pressed_keys: Sequence[bool], dino):
-        settingsOptions = ["Name: ", "Language", "Back"]
+    def settingsMenu(self, pressed_keys: Sequence[bool], events):
+        settingsOptions = [lang["name"] + self.name, lang["language"] + available_langs[self.selectedLanguage], lang["back"]]
 
         if self.inSettingsMenu:
+            if self.settingsIndex == 0:
+                for event in events:
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE:
+                            self.name = self.name[:-1]  # ? We remove the last char
+                        elif event.key == pygame.K_RETURN:
+                            save("name", self.name)
+                        else:
+                            self.name += event.unicode  # ? We add the new char
+            
+            if self.settingsIndex == 1:
+                if pressed_keys[pygame.K_RIGHT] and not self.btn7:
+                    self.selectedLanguage = (self.selectedLanguage - 1) % len(available_langs)
+                    self.btn7 = True
+                elif not pressed_keys[pygame.K_RIGHT]:
+                    self.btn7 = False
+
+                if pressed_keys[pygame.K_LEFT] and not self.btn8:
+                    self.selectedLanguage = (self.selectedLanguage + 1) % len(available_langs)
+                    self.btn8 = True
+                elif not pressed_keys[pygame.K_LEFT]:
+                    self.btn8 = False
+
+                if pressed_keys[pygame.K_RETURN]:
+                    save("lang", self.selectedLanguage)
+                
+
             if pressed_keys[pygame.K_UP] and not self.btn5:
                 self.settingsIndex = (self.settingsIndex - 1) % len(settingsOptions)
                 self.btn5 = True

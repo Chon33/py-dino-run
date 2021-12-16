@@ -7,23 +7,24 @@ import pygame
 
 
 class Dino:
-    """Usa los frames del Spritesheet para animar al personaje y añade funcionalidades:
-            - Saltar
-            - Colisionar
-            - Movimiento
+    """Uses frames of a Spritesheet to animate the dino and makes it move:
+            - Jump
+            - Sneak
+            - Collide
+            - Run
     """
 
     def __init__(self, skinIndex: int, mult: int, name: str, screen: pygame.Surface):      
         self.shadow = pygame.image.load("assets/misc/shadow.png")
         self.shadow = pygame.transform.scale(self.shadow, (55, 55))
         self.mult = mult
-        self.name = name
+        #self.name = name
         self.screen = screen
         self.i, self.k, self.elapsed, self.y, self.started = 0, 0, 0, 0, False
         self.changeSkin(skinIndex)
         self.running = True
 
-        self.ui_text = UItext(self.name.capitalize(), screen)
+        self.ui_text = UItext(name.capitalize(), screen)
         self.elap2 = 0
 
         self.is_jumping = False
@@ -96,7 +97,7 @@ class Dino:
                 self.ui_text.openSettingsMenu = True
 
             elif self.ui_text.selectedOption == 1 and not self.ui_text.closeSettingsMenu:
-                if self.ui_text.settingsIndex == 1:
+                if self.ui_text.settingsIndex == 2:
                     self.ui_text.inSettingsMenu = False
                     self.ui_text.openSettingsMenu = False
                     self.ui_text.closeSettingsMenu = True
@@ -107,12 +108,12 @@ class Dino:
         elif not pressed_keys[pygame.K_RETURN]:
             self.btn1 = False
 
-    def update(self, screen, pressed_keys: Sequence[bool]):
+    def update(self, screen, pressed_keys: Sequence[bool], events):
         self.start(pressed_keys)
         self.jump(pressed_keys)
         self.sneak(pressed_keys)
 
-        self.ui_text.update(pressed_keys, self) #? self = Dino
+        self.ui_text.update(pressed_keys, self, events)  # ? self = Dino
 
         self.elapsed += 1
         self.elap2 +=1

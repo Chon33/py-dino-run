@@ -1,12 +1,13 @@
 {
-    "singleplayer": "Un jugador",
-    "settings": "Configuración",
-    "scoreboard": "Scoreboard",
-    "exit": "Salir",
-    "name": "Nombre: ",
-    "lang": "Idioma",
-    "back": "Atrás",
-    "pause": "Pausa",
-    "continue": "Retomar",
-    "restart": "Reiniciar"
+  "singleplayer": "Un jugador",
+  "settings": "Config",
+  "scoreboard": "Scoreboard",
+  "exit": "Salir",
+  "name": "Nombre: ",
+  "language": "Idioma: ",
+  "back": "Atrás",
+  "pause": "Pausa",
+  "continue": "Retomar",
+  "restart": "Reiniciar",
+  "pygame_error": "Necesitas \"pygame\".\n Usa \"pip install pygame\" para instalarlo.\n\nPuedes usar \"sudo apt install python3-pip\" para instalar pip.\n"
 }

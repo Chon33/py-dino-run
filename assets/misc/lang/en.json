@@ -4,9 +4,10 @@
     "scoreboard": "Scoreboard",
     "exit": "Exit",
     "name": "Name: ",
-    "lang": "Language",
+    "language": "Language: ",
     "back": "Back",
     "pause": "Pause",
     "continue": "Continue",
-    "restart": "Restart"
+    "restart": "Restart",
+    "pygame_error": "You need \"pygame\".\nUse \"pip install pygame\" to install it.\nYou can also use \"sudo apt install python3-pip\" to install pip.\n"
 }

@@ -5,13 +5,11 @@ import pygame
 
 
 class Spritesheet:
-    """Divide un spritesheet en frames definidos en un archivo json con le mismo nombre que la imagen"""
+    """Divides a spritesheet into frames with metadata.json"""
 
     def __init__(self, skin: str):
         self.skin = f"assets/skins/{skin}.png"
         self.sprite_sheet = pygame.image.load(self.skin).convert()
-        # ? conver() => se usa por si la ventana y el sprite no se "entienden", (ahorra las cuenas necesarias en cada frame, las hace solo una vez)
-        #self.meta_data = self.skin.replace('png', 'json')
         self.meta_data = f"assets/skins/metadata.json"
         with open(self.meta_data) as f:
             self.data = json.load(f)

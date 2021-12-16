@@ -1,13 +1,15 @@
 # Py Dino Run
 Not internet connection chrome dino game 
 
+### How to run
+You'll need [python3](https://www.python.org/) and [pygame](https://www.pygame.org/news)
+
 ### Todo:
 - [x] Remove python args and add settings menu
-- [ ] Setings menu functionality
-- [ ] Save config to file
+- [x] Setings menu functionality => Fix language not setting without restarting
+- [x] Save config to file
 - [ ] Add scoreboard menu
 - [ ] Add trees
-- [ ] Server
 - [ ] Pause Menu
 
 #### Animations:
